@@ -4,3 +4,43 @@ body,
   margin: 0;
   height: 100%;
 }
+
+body {
+  font-family: system-ui, sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid #d9dce3;
+  background: #fff;
+}
+
+.open-button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.open-button:hover {
+  background: #333;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

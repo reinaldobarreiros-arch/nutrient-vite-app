@@ -1,32 +1,33 @@
-# React + TypeScript + Vite
+# Nutrient Web SDK + DWS Processor (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A React + Vite app that embeds the Nutrient Web SDK viewer (`@nutrient-sdk/viewer`) and calls
+Nutrient DWS Processor API (`@nutrient-sdk/dws-client-typescript`) from the Vite server.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+cp .env.example .env.local   # then add your keys
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open http://localhost:5173/.
+
+| Variable | Used by | Purpose |
+| --- | --- | --- |
+| `VITE_NUTRIENT_LICENSE_KEY` | Browser | Web SDK license key. Without it the viewer runs in trial mode with a watermark. |
+| `NUTRIENT_API_KEY` | Vite server only | DWS Processor API key. Never sent to the browser. |
+
+## Features
+
+- **Open PDF** (toolbar): open a PDF from your computer.
+- **DWS dropdown** (toolbar): send the current document, including annotations, to DWS Processor
+  and load the result: OCR, flatten annotations, compress, rotate.
+
+## How DWS is wired
+
+`server/dwsPlugin.ts` adds `POST /api/dws/:action` to the Vite dev and preview servers. To add an
+operation, add it to `src/dws.ts` (toolbar label) and `server/dwsPlugin.ts` (DWS call).
+
+The endpoint only exists in `npm run dev` and `npm run preview`. For production hosting, move the
+handler in `server/dwsPlugin.ts` to your backend.

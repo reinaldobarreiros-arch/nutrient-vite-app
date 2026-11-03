@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nutrient-sdk/dws-client-typescript": "^3.0.0",
     "@nutrient-sdk/viewer": "^1.24.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
